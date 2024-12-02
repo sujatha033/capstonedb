@@ -1,0 +1,39 @@
+<%- include('partials/header.ejs') %>
+    <div class="container" id="heading">
+        <!-- <h1>
+          My Books
+        </h1> -->
+      
+      <ul id="postsList"></ul>
+      <% for(let book of books){%>
+          
+          <li class="list">
+            <% if (book.cover_image) { %> 
+              <!-- <p><strong>Cover:</strong></p>  -->
+               <img id="image" src="https://covers.openlibrary.org/b/id/<%= book.cover_image %>-L.jpg" 
+              alt="book cover" style="float: right; width: 300px; height: 250px;">
+               <% } else { %> 
+              <p class="nocover">No cover image available.</p> 
+            <% } %>
+            <h2>
+              <%=book.title%>
+            </h2>
+            <small>
+              <%= book.date %>
+            </small>
+            <p>  
+              <%=book.content%>
+            </p>
+           <p> By: <%=book.author%></p>
+           <p><strong>How strongly I recommend it: <%= book.rating %>/10</strong></p>
+           
+            <a class="edit" href="/edit/<%= book.id %>">Edit</a>
+            <a class="delete" href="/delete/<%= book.id %>">Delete</a>
+         
+          </li>
+        
+        <% } %>
+        
+    </div>
+</body>
+</html>

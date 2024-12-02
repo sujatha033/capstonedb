@@ -1,0 +1,87 @@
+
+<%- include('partials/header.ejs') %>.
+<!-- <script>
+const button = document.getElementById("getbook");
+
+button.addEventListener("click", updateButton);
+function updateButton() {
+  // if (button.value === "Start machine") {
+  //   button.value = "Stop machine";
+  //   paragraph.textContent = "The machine has started!";
+  // } else {
+  //   button.value = "Start machine";
+  //   paragraph.textContent = "The machine is stopped.";
+  // }
+  if(!book){
+    alert("no book found");
+  }
+}
+</script> -->
+<body>
+    <div class="container">
+        <% if(locals.books){ %>
+        <h1>
+            Edit book
+        </h1>
+        <form class="editForm" method="post" action="/edit/<%= books.id %>" >
+            <input type="hidden" name = id value="<%= books.id %>">
+            <label for="title">Title :</label><br>
+            
+            <input type="text" name="title" value="<%= books.title %>">
+            <!-- <img src="images/yoga.jpg" style="float: right;"> -->
+            <label for="">Content : </label><br>
+            <textarea name="content" rows="10"><%= books.content %></textarea>
+            
+            <label for="author">Author : </label><br>
+            <input type="text" name="author" value="<%= books.author %>">
+            <label for="rating">Rating : </label><br>
+            <input type="text" name="rating" min="1" max="10" value="<%= books.rating %>">
+            <button class="full-width" id="update" type="submit">
+                Update
+            </button>
+        </form>
+
+        <% }else{ %>
+            <h1>
+                New Book
+            </h1>
+            <% let submitted = 'true'%>
+            <form action="/get-book" method="get"> 
+                <label for="title">Enter Title:</label> 
+                <input type="text" id="title" name="title" required /> 
+                <input id="getbook" type="submit" name="submitted"  formtarget="true" value="GET BOOK" /> 
+                </form> 
+
+              <% if (locals.book) { %> 
+                <h1>Book Details</h1> 
+                <p name="title"><strong>Title:</strong> <%= book.title %></p> 
+                <p name="author"><strong>Author:</strong> <%= book.author_name %></p> 
+                <% if (book.cover_i) { %> 
+                  <p><strong>Cover:</strong></p> 
+                  <img src="https://covers.openlibrary.org/b/id/<%= book.cover_i %>-L.jpg" alt="Book Cover" /> 
+                <% } else { %> 
+                  <p>No cover image available.</p> 
+                <% } %> 
+              
+                <form action="/add-book" method="post">
+                  <input type="hidden" name="title" value="<%= book.title %>">
+                  <input type="hidden" name="cover_i" value="<%= book.cover_i %>">
+                  <input type="hidden" name="author" value="<%= book.author_name %>">
+                  <input type="hidden" name="date" value="<%= new Date()%>">
+                  <textarea name="content" placeholder="Content" required rows="10"></textarea>
+                  <input type="number" name="rating" placeholder="Rating (1-10)" min="1" max="10" required>
+                  <button type="submit" id="addbook" class="full-width">Add Book</button>
+
+                </form>
+              
+              <% } else { %> 
+                
+               
+                  <!-- <p>No book found.</p> -->
+                
+              <% } %>
+              
+            <% } %>
+    </div>
+</body>
+</html>
